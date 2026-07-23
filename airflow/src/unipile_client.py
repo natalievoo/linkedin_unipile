@@ -40,15 +40,15 @@ class UnipileClient:
             body = exc.read().decode("utf-8", "replace")
             raise RuntimeError(f"Unipile API error {exc.code} on {path}: {body}") from exc
 
-    def iter_relations(self, account_id: str) -> Iterator[dict]:
-        """Yield every relation (first-degree connection) for the account."""
+    def _iter_paginated(self, path: str, account_id: str, label: str) -> Iterator[dict]:
+        """Cursor-paginate any account-scoped list endpoint."""
         cursor = None
         fetched = 0
         while True:
             params = {"account_id": account_id, "limit": self.page_size}
             if cursor:
                 params["cursor"] = cursor
-            payload = self._get("/api/v1/users/relations", params)
+            payload = self._get(path, params)
             items = payload.get("items", [])
             for item in items:
                 yield item
@@ -56,7 +56,15 @@ class UnipileClient:
             cursor = payload.get("cursor")
             if not cursor or not items:
                 break
-        logging.info(f"Unipile: fetched {fetched} relation(s) for account {account_id}")
+        logging.info(f"Unipile: fetched {fetched} {label} for account {account_id}")
+
+    def iter_relations(self, account_id: str) -> Iterator[dict]:
+        """Yield every relation (first-degree connection) for the account."""
+        yield from self._iter_paginated("/api/v1/users/relations", account_id, "relation(s)")
+
+    def iter_messages(self, account_id: str) -> Iterator[dict]:
+        """Yield every message across all of the account's chats."""
+        yield from self._iter_paginated("/api/v1/messages", account_id, "message(s)")
 
 
 def relation_to_row(r: dict, ingested_at: str) -> dict:
@@ -77,5 +85,26 @@ def relation_to_row(r: dict, ingested_at: str) -> dict:
         "profile_picture_url": r.get("profile_picture_url"),
         "connection_urn": r.get("connection_urn"),
         "connected_at": connected_at,
+        "ingested_at": ingested_at,
+    }
+
+
+def message_to_row(r: dict, ingested_at: str) -> dict:
+    """Map a Unipile message to our messages-table row."""
+    return {
+        "message_id": r.get("id"),
+        "chat_id": r.get("chat_id"),
+        "account_id": r.get("account_id"),
+        "sender_id": r.get("sender_id"),
+        "is_sender": bool(r.get("is_sender")),   # True = the connected account sent it
+        "text": r.get("text"),
+        "message_type": r.get("message_type"),
+        "attendee_type": r.get("attendee_type"),
+        "seen": bool(r.get("seen")),
+        "delivered": bool(r.get("delivered")),
+        "edited": bool(r.get("edited")),
+        "deleted": bool(r.get("deleted")),
+        "has_attachments": bool(r.get("attachments")),
+        "sent_at": r.get("timestamp"),           # ISO 8601 string, parsed in the DAG
         "ingested_at": ingested_at,
     }

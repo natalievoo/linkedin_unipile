@@ -52,6 +52,21 @@ this).
 | connected_at | TIMESTAMP | from Unipile `created_at` — drives growth-over-time |
 | ingested_at | TIMESTAMP | when this run pulled the data |
 
+The DAG also full-refreshes a **`messages`** table (LinkedIn message history):
+
+| column | type | notes |
+|---|---|---|
+| message_id | VARCHAR | Unipile message id |
+| chat_id | VARCHAR | conversation id |
+| sender_id | VARCHAR | LinkedIn member id of the sender |
+| is_sender | BOOLEAN | true = the connected account sent it |
+| text | VARCHAR | message content (**sensitive** — private conversation data) |
+| message_type / attendee_type | VARCHAR | |
+| seen / delivered / edited / deleted | BOOLEAN | message flags |
+| has_attachments | BOOLEAN | |
+| sent_at | TIMESTAMP | from Unipile `timestamp` |
+| ingested_at | TIMESTAMP | when this run pulled the data |
+
 ## Run it now (standalone, no Airflow)
 
 Prereqs: the authenticated `koalake` CLI on PATH (`koalake auth status` → OK) and
