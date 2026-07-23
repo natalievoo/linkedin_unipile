@@ -15,12 +15,21 @@ from typing import Iterator
 
 class UnipileClient:
     def __init__(self, dsn: str, api_key: str, page_size: int = 100):
-        self.dsn = dsn
+        # The DSN may carry a non-standard port (e.g. api43.unipile.com:17362).
+        # Many managed networks (like the Koalake worker) only allow outbound on
+        # 443 and silently drop other ports. Unipile supports staying on 443 and
+        # passing the real port as a ?port= query param, so split it off here.
+        host, _, port = dsn.partition(":")
+        self.host = host
+        self.port = port or None
         self.api_key = api_key
         self.page_size = page_size
 
     def _get(self, path: str, params: dict) -> dict:
-        url = f"https://{self.dsn}{path}?{urllib.parse.urlencode(params)}"
+        params = dict(params)
+        if self.port:
+            params.setdefault("port", self.port)
+        url = f"https://{self.host}{path}?{urllib.parse.urlencode(params)}"
         req = urllib.request.Request(
             url, headers={"X-API-KEY": self.api_key, "accept": "application/json"}
         )
