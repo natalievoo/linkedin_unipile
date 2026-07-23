@@ -1,0 +1,7 @@
+# The standalone script (scripts/ingest_connections.py) needs NOTHING here --
+# it uses only the Python standard library plus the authenticated `koalake` CLI.
+#
+# The Airflow DAG (dags/linkedin_connections.py) runs on the Koalake platform,
+# which already provides Apache Airflow and the koalake airflow-provider. The
+# only extra import it needs is:
+requests>=2.31
