@@ -23,10 +23,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-s
 .sidebar-title { font-size: 13px; font-weight: 700; margin-bottom: 18px; }
 .filter-group { margin-bottom: 24px; }
 .filter-group-title { font-size: 12px; font-weight: 600; margin-bottom: 10px; }
-.filter-item { display: flex; align-items: center; gap: 8px; padding: 3px 4px; font-size: 12px; cursor: pointer; user-select: none; border-radius: 5px; }
+.filter-item { display: flex; align-items: center; gap: 9px; padding: 5px 4px; font-size: 12px; cursor: pointer; user-select: none; border-radius: 5px; }
 .filter-item:hover { background: #fff; }
-.filter-check { width: 12px; height: 12px; border: 1px solid var(--text-mid); background: var(--brand); display: inline-block; flex-shrink: 0; border-radius: 2px; }
-.filter-check.unchecked { background: #fff; }
+.filter-check { width: 15px; height: 15px; border: 1.5px solid var(--border-strong); background: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 3px; }
+.filter-item.on .filter-check { background: var(--brand); border-color: var(--brand); }
+.filter-item.on .filter-check::after { content: ''; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
 .founder-swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-left: auto; }
 .tree { font-size: 12px; }
 .tree-row { display: flex; align-items: center; gap: 6px; padding: 4px 5px; border-radius: 5px; cursor: pointer; color: var(--text); font-weight: 600; user-select: none; }
@@ -38,6 +39,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-s
 .tree-leaf { display: flex; align-items: center; gap: 8px; padding: 3px 5px 3px 15px; border-radius: 5px; cursor: pointer; color: var(--text-mid); font-weight: 500; user-select: none; }
 .tree-leaf:hover { background: #fff; }
 .tree-leaf.selected { color: var(--brand); font-weight: 700; }
+.tree-radio { width: 12px; height: 12px; border: 1.5px solid var(--border-strong); border-radius: 50%; flex-shrink: 0; }
+.tree-leaf.selected .tree-radio { border-color: var(--brand); background: radial-gradient(var(--brand) 46%, transparent 50%); }
 .main { grid-column: 2; grid-row: 2; background: var(--canvas); padding: 24px 32px; display: flex; flex-direction: column; gap: 20px; }
 .card { background: var(--card); border: 1px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .card-head { padding: 12px 20px 10px; border-bottom: 1px solid var(--border); }
@@ -55,6 +58,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-s
 .kpi-delta { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--pos); }
 .kpi-delta.dn { color: var(--text-mid); }
 .kpi-delta .kpi-dsub { color: var(--text-light); font-weight: 500; }
+.src { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #92650a; background: #FEF3C7; padding: 1px 5px; border-radius: 4px; margin-left: 6px; vertical-align: 1px; }
 .chart-wrap { position: relative; }
 .lc { width: 100%; height: auto; display: block; }
 .lc .grid-line { stroke: var(--border); stroke-width: 1; }
@@ -139,22 +143,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-s
 
     <div class="kpi-row">
       <div class="card kpi-hero">
-        <div class="kpi-label">Requests sent</div>
+        <div class="kpi-label">Requests sent <span class="src">Dripify</span></div>
         <div class="kpi-value" id="kSent">—</div>
         <div class="kpi-delta" id="kSentD"></div>
       </div>
       <div class="card kpi-stat">
-        <div class="kpi-label">Acceptance rate</div>
+        <div class="kpi-label">Acceptance rate <span class="src">Dripify</span></div>
         <div class="kpi-value" id="kAcc">—</div>
         <div class="kpi-delta" id="kAccD"></div>
       </div>
       <div class="card kpi-stat">
-        <div class="kpi-label">Reply rate</div>
+        <div class="kpi-label">Reply rate <span class="src live">Live</span></div>
         <div class="kpi-value" id="kRep">—</div>
         <div class="kpi-delta" id="kRepD"></div>
       </div>
       <div class="card kpi-stat">
-        <div class="kpi-label">New connections</div>
+        <div class="kpi-label">New connections <span class="src live">Live</span></div>
         <div class="kpi-value" id="kNew">—</div>
         <div class="kpi-delta" id="kNewD"></div>
       </div>
@@ -335,12 +339,12 @@ function render() {
   var wrap = document.getElementById('founderFilter');
   ORDER.forEach(function (k) {
     var f = FOUNDERS[k];
-    var row = document.createElement('div'); row.className = 'filter-item';
+    var row = document.createElement('div'); row.className = 'filter-item on';
     row.innerHTML = '<span class="filter-check"></span><span>' + f.name + '</span><span class="founder-swatch" style="background:' + f.color + '"></span>';
     row.addEventListener('click', function () {
       if (selected[k] && active().length === 1) return;
       selected[k] = !selected[k];
-      row.querySelector('.filter-check').classList.toggle('unchecked', !selected[k]);
+      row.classList.toggle('on', selected[k]);
       render();
     });
     wrap.appendChild(row);
@@ -364,7 +368,7 @@ function render() {
       qRow.addEventListener('click', function () { qNode.classList.toggle('open'); });
       var qCh = document.createElement('div'); qCh.className = 'tree-children';
       tree[y][q].forEach(function (o) {
-        var leaf = document.createElement('div'); leaf.className = 'tree-leaf'; leaf.innerHTML = '<span>' + o.m + ' ' + y + '</span>';
+        var leaf = document.createElement('div'); leaf.className = 'tree-leaf'; leaf.innerHTML = '<span class="tree-radio"></span><span>' + o.m + ' ' + y + '</span>';
         leaf.addEventListener('click', function () { selMonth = o.i; leaves.forEach(function (l) { l.classList.remove('selected'); }); leaf.classList.add('selected'); render(); });
         if (o.i === selMonth) leaf.classList.add('selected');
         leaves.push(leaf); qCh.appendChild(leaf);
