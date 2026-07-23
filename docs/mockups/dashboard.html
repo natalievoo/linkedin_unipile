@@ -1,0 +1,442 @@
+<title>LinkedIn Outreach — Founder Accounts (Mock)</title>
+<style>
+:root {
+  --brand: #3b89fa; --brand-dark: #2760ff; --brand-tint: #e8f1fe;
+  --text: #1F2937; --text-mid: #6B7280; --text-light: #9CA3AF;
+  --bg: #F9FAFB; --canvas: #DEE2E6; --card: #FFFFFF;
+  --border: #E5E7EB; --border-strong: #D1D5DB; --pos: #0EA05A; --neg: #DC5B44;
+  --f-tim: #3b89fa; --f-sascha: #eb6834; --f-mark: #1baf7a;
+  /* ordinal blue ramp for the funnel stages */
+  --fn-1: #256abf; --fn-2: #3b89fa; --fn-3: #86b6ef;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--canvas); }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); font-size: 13px; line-height: 1.4; }
+.wrap { width: 100%; max-width: 1440px; margin: 0 auto; background: var(--bg); }
+.page { display: grid; grid-template-columns: 210px 1fr; grid-template-rows: auto auto 1fr; min-height: 810px; }
+
+.logo-box { grid-column: 1; grid-row: 1; background: #fff; height: 92px; display: flex; align-items: center; gap: 9px; padding: 0 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.logo-dots { display: grid; grid-template-columns: 9px 9px; grid-template-rows: 9px 9px; gap: 3px; flex-shrink: 0; }
+.logo-dots span { border-radius: 50%; }
+.logo-dots span:nth-child(1){ background:#6d18fa; } .logo-dots span:nth-child(2){ background:#3b89fa; }
+.logo-dots span:nth-child(3){ background:#ffc400; } .logo-dots span:nth-child(4){ background:#a1db00; }
+.logo-word { font-size: 21px; font-weight: 800; letter-spacing: -0.03em; color: var(--brand-dark); }
+
+.header { grid-column: 2; grid-row: 1; height: 92px; padding: 0 36px; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--border); }
+.header-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.header-sub { font-size: 12px; color: var(--text-mid); margin-top: 3px; }
+
+.sidebar { grid-column: 1; grid-row: 2 / 4; background: var(--bg); padding: 22px 20px 16px; border-right: 1px solid var(--border); }
+.sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-mid); margin-bottom: 16px; }
+.filter-group { margin-bottom: 22px; }
+.filter-group-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.filter-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; cursor: pointer; user-select: none; }
+.filter-check { width: 13px; height: 13px; border: 1.5px solid var(--border-strong); background: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 3px; }
+.filter-item.on .filter-check { background: var(--brand); border-color: var(--brand); }
+.filter-item.on .filter-check::after { content: ""; width: 6px; height: 6px; background: #fff; border-radius: 1px; }
+.founder-swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-left: auto; }
+
+/* period tree */
+.tree-row, .tree-leaf { display: flex; align-items: center; gap: 7px; padding: 3px 0; font-size: 12px; cursor: pointer; }
+.tree-children { display: none; padding-left: 15px; }
+.tree-node.open > .tree-children { display: block; }
+.tree-caret { width: 8px; color: var(--text-light); font-size: 9px; transition: transform .12s; }
+.tree-node.open > .tree-row .tree-caret { transform: rotate(90deg); }
+.tree-leaf { padding-left: 15px; }
+.tree-dot { width: 11px; height: 11px; border: 1.5px solid var(--border-strong); border-radius: 50%; flex-shrink: 0; }
+.tree-row.sel .tree-dot, .tree-leaf.sel .tree-dot { border-color: var(--brand); background: radial-gradient(var(--brand) 45%, #fff 55%); }
+
+.main { grid-column: 2; grid-row: 2 / 4; padding: 22px 36px 12px; display: flex; flex-direction: column; gap: 16px; }
+
+.kpi-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 16px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+.kpi-hero, .kpi-stat { padding: 16px 20px; display: flex; flex-direction: column; gap: 5px; }
+.kpi-hero { background: linear-gradient(135deg, #f4f8ff 0%, #fff 60%); border-color: #cfe0fb; }
+.kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-mid); }
+.kpi-value { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.kpi-hero .kpi-value { font-size: 38px; color: var(--brand-dark); }
+.kpi-delta { font-size: 12px; font-weight: 600; color: var(--pos); }
+.kpi-delta.dn { color: var(--neg); }
+.kpi-dsub { color: var(--text-light); font-weight: 500; }
+
+.card-head { padding: 13px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.card-title-text { font-size: 13px; font-weight: 700; }
+.card-sub { font-size: 11px; color: var(--text-light); font-weight: 500; }
+.legend { display: flex; gap: 14px; }
+.lg { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-mid); font-weight: 600; }
+.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.card-body { padding: 16px 18px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.chart-wrap { position: relative; }
+.lc { width: 100%; height: auto; display: block; }
+.grid-line { stroke: var(--border); stroke-width: 1; }
+.baseline { stroke: var(--border-strong); stroke-width: 1; }
+.axis-txt { fill: var(--text-light); font-size: 9px; font-variant-numeric: tabular-nums; }
+.area { fill: rgba(59,137,250,0.10); }
+.cross { stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 3 3; }
+.tt { position: absolute; transform: translate(-50%,-115%); background: #fff; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 9px; font-size: 11px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); pointer-events: none; opacity: 0; white-space: nowrap; z-index: 2; }
+.tt-d { font-weight: 700; margin-bottom: 4px; }
+.tt-r { display: flex; align-items: center; gap: 6px; }
+.tt-r b { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* funnel */
+.funnel { display: flex; flex-direction: column; gap: 4px; }
+.funnel-stage { display: grid; grid-template-columns: 96px 1fr 84px; align-items: center; gap: 12px; }
+.funnel-name { font-size: 12px; font-weight: 700; }
+.funnel-track { background: var(--bg); border-radius: 6px; height: 30px; overflow: hidden; }
+.funnel-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; color: #fff; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 42px; transition: width .3s; }
+.funnel-count { font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.funnel-conv { grid-column: 2; font-size: 11px; color: var(--text-mid); font-weight: 600; padding: 2px 0 2px 2px; }
+.funnel-conv b { color: var(--text); }
+
+/* by founder */
+.founder-row { display: grid; grid-template-columns: 92px 1fr 1fr 1fr; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border); }
+.founder-row:first-child { border-top: none; }
+.founder-id { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+.founder-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.fmetric { display: flex; flex-direction: column; gap: 4px; }
+.fmetric-top { display: flex; justify-content: space-between; font-size: 11px; }
+.fmetric-lab { color: var(--text-mid); font-weight: 600; }
+.fmetric-val { font-weight: 700; font-variant-numeric: tabular-nums; }
+.fbar-track { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.fbar { height: 100%; border-radius: 3px; }
+.founder-head { display: grid; grid-template-columns: 92px 1fr 1fr 1fr; gap: 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); font-weight: 700; padding-bottom: 8px; }
+
+.banner-row { grid-column: 1 / -1; grid-row: 3; background: #FEF3C7; color: #78350F; text-align: center; padding: 7px; font-size: 11px; letter-spacing: 0.02em; align-self: end; }
+</style>
+
+<div class="wrap">
+<div class="page">
+
+  <div class="logo-box">
+    <div class="logo-dots"><span></span><span></span><span></span><span></span></div>
+    <div class="logo-word">koalake</div>
+  </div>
+
+  <div class="header">
+    <div class="header-title">LinkedIn Outreach — Founder Accounts</div>
+    <div class="header-sub">Monitoring founder-led outreach: requests sent → accepted → replied</div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-title">Filters</div>
+
+    <div class="filter-group">
+      <div class="filter-group-title">Period</div>
+      <div id="periodTree"></div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-group-title">Founder account</div>
+      <div id="founderFilter"></div>
+    </div>
+  </aside>
+
+  <div class="main">
+
+    <div class="kpi-row">
+      <div class="card kpi-hero">
+        <div class="kpi-label">Requests sent</div>
+        <div class="kpi-value" id="kSent">—</div>
+        <div class="kpi-delta" id="kSentD"></div>
+      </div>
+      <div class="card kpi-stat">
+        <div class="kpi-label">Acceptance rate</div>
+        <div class="kpi-value" id="kAcc">—</div>
+        <div class="kpi-delta" id="kAccD"></div>
+      </div>
+      <div class="card kpi-stat">
+        <div class="kpi-label">Reply rate</div>
+        <div class="kpi-value" id="kRep">—</div>
+        <div class="kpi-delta" id="kRepD"></div>
+      </div>
+      <div class="card kpi-stat">
+        <div class="kpi-label">New connections</div>
+        <div class="kpi-value" id="kNew">—</div>
+        <div class="kpi-delta" id="kNewD"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title-text">Outreach Funnel</span>
+        <span class="card-sub" id="funnelSub"></span>
+      </div>
+      <div class="card-body">
+        <div class="funnel" id="funnel"></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title-text">Requests Sent &amp; Accepted</span>
+          <div class="legend">
+            <span class="lg"><span class="sw" style="background:#3b89fa"></span> Sent</span>
+            <span class="lg"><span class="sw" style="background:#9CA3AF"></span> Accepted</span>
+          </div>
+        </div>
+        <div class="card-body chart-wrap">
+          <svg id="cVol" class="lc" viewBox="0 0 560 200" role="img" aria-label="Requests sent and accepted per month"></svg>
+          <div class="tt" id="ttVol"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title-text">Acceptance &amp; Reply Rate</span>
+          <div class="legend">
+            <span class="lg"><span class="sw" style="background:#3b89fa"></span> Acceptance %</span>
+            <span class="lg"><span class="sw" style="background:#eb6834"></span> Reply %</span>
+          </div>
+        </div>
+        <div class="card-body chart-wrap">
+          <svg id="cRate" class="lc" viewBox="0 0 560 200" role="img" aria-label="Acceptance and reply rate per month"></svg>
+          <div class="tt" id="ttRate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title-text">By Founder</span>
+        <span class="card-sub" id="byFounderSub"></span>
+      </div>
+      <div class="card-body">
+        <div class="founder-head"><span>Founder</span><span>Requests sent</span><span>Acceptance</span><span>Reply</span></div>
+        <div id="byFounder"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="card-title-text">Combined Network Growth</span><span class="card-sub">cumulative connections</span></div>
+      <div class="card-body chart-wrap">
+        <svg id="cGrow" class="lc" viewBox="0 0 1150 200" role="img" aria-label="Cumulative connections over time"></svg>
+        <div class="tt" id="ttGrow"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="banner-row">Placeholder data — for design review only. Numbers are illustrative. Requests-sent &amp; acceptance rate will come from Dripify once integrated.</div>
+
+</div>
+</div>
+
+<script>
+var NS = 'http://www.w3.org/2000/svg';
+
+// ---- Placeholder data: 12 months (Aug 2025 → Jul 2026), per founder ----
+var MONTHS = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul'];
+var YEARS  = [2025,2025,2025,2025,2025,2026,2026,2026,2026,2026,2026,2026];
+var FOUNDERS = {
+  tim:    { name:'Tim',    color:'#3b89fa', sent:[95,102,110,88,70,120,125,130,128,135,140,145], accBase:0.38, repBase:0.24, connBase:820 },
+  sascha: { name:'Sascha', color:'#eb6834', sent:[70,74,80,66,52,85,88,92,90,95,98,102],       accBase:0.41, repBase:0.20, connBase:540 },
+  mark:   { name:'Mark',   color:'#1baf7a', sent:[55,58,62,50,40,66,70,72,71,74,76,80],         accBase:0.33, repBase:0.19, connBase:300 }
+};
+var ORDER = ['tim','sascha','mark'];
+
+// derive accepted / replied / cumulative per founder (slight upward drift = "improving")
+ORDER.forEach(function (key) {
+  var f = FOUNDERS[key];
+  f.accepted = []; f.replied = []; f.cum = [];
+  var run = f.connBase;
+  for (var i = 0; i < 12; i++) {
+    var accR = Math.min(0.6, f.accBase + (i - 6) * 0.004);
+    var repR = Math.min(0.5, f.repBase + (i - 6) * 0.002);
+    var acc = Math.round(f.sent[i] * accR);
+    var rep = Math.round(acc * repR);
+    f.accepted.push(acc); f.replied.push(rep);
+    run += acc; f.cum.push(run);
+  }
+});
+
+var selected = { tim: true, sascha: true, mark: true };
+var selMonth = 11; // default Jul 2026
+
+function activeFounders() { return ORDER.filter(function (k) { return selected[k]; }); }
+function sumAt(field, i) { return activeFounders().reduce(function (s, k) { return s + FOUNDERS[k][field][i]; }, 0); }
+function seriesOf(field) { return MONTHS.map(function (_, i) { return sumAt(field, i); }); }
+function n(v) { return Math.round(v).toLocaleString('en-US'); }
+function pct(a, b) { return b ? (a / b * 100) : 0; }
+function periodLabel(i) { return MONTHS[i] + ' ' + YEARS[i]; }
+
+function delta(cur, prev, isPct) {
+  if (prev == null) return { txt: '', dn: false };
+  if (isPct) { var d = cur - prev; return { txt: (d >= 0 ? '+' : '') + d.toFixed(1) + ' pt', dn: d < 0 }; }
+  if (prev === 0) return { txt: '', dn: false };
+  var p = (cur - prev) / prev * 100;
+  return { txt: (p >= 0 ? '+' : '') + p.toFixed(1) + '%', dn: p < 0 };
+}
+function setDelta(id, d, prevLbl) {
+  var el = document.getElementById(id);
+  el.className = 'kpi-delta' + (d.dn ? ' dn' : '');
+  el.innerHTML = d.txt ? d.txt + ' <span class="kpi-dsub">vs ' + prevLbl + '</span>' : '<span class="kpi-dsub">—</span>';
+}
+
+// ---- generic line/area chart (adapted from the matomo mock) ----
+function chart(id, ttId, opts) {
+  var svg = document.getElementById(id), tt = document.getElementById(ttId);
+  svg.innerHTML = '';
+  var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+  var padL = 40, padR = 14, padT = 12, padB = 22;
+  var pw = W - padL - padR, ph = H - padT - padB, len = MONTHS.length;
+  function x(i) { return padL + i * (pw / (len - 1)); }
+  function yy(v) { return padT + ph * (1 - (v - opts.yMin) / (opts.yMax - opts.yMin)); }
+  function el(t, a, c) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); if (c) e.setAttribute('class', c); return e; }
+  opts.grids.forEach(function (g) {
+    svg.appendChild(el('line', { x1: padL, y1: yy(g), x2: padL + pw, y2: yy(g) }, g === opts.yMin ? 'baseline' : 'grid-line'));
+    var t = el('text', { x: padL - 7, y: yy(g) + 4, 'text-anchor': 'end' }, 'axis-txt'); t.textContent = opts.fmt(g); svg.appendChild(t);
+  });
+  [0, 3, 6, 9, 11].forEach(function (i) {
+    var t = el('text', { x: x(i), y: H - 5, 'text-anchor': i === 0 ? 'start' : (i === len - 1 ? 'end' : 'middle') }, 'axis-txt'); t.textContent = MONTHS[i]; svg.appendChild(t);
+  });
+  function pts(vals) { return vals.map(function (v, i) { return x(i) + ',' + yy(v); }).join(' '); }
+  if (opts.area) svg.appendChild(el('polygon', { points: padL + ',' + yy(opts.yMin) + ' ' + pts(opts.series[0].values) + ' ' + (padL + pw) + ',' + yy(opts.yMin) }, 'area'));
+  opts.series.forEach(function (s) { svg.appendChild(el('polyline', { points: pts(s.values), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' })); });
+  opts.series.forEach(function (s) { svg.appendChild(el('circle', { cx: x(len - 1), cy: yy(s.values[len - 1]), r: 3.5, fill: s.color })); });
+  var cross = el('line', { y1: padT, y2: padT + ph, opacity: 0 }, 'cross'); svg.appendChild(cross);
+  var dots = opts.series.map(function (s) { var d = el('circle', { r: 4, fill: s.color, opacity: 0 }); svg.appendChild(d); return d; });
+  var ov = el('rect', { x: padL, y: padT, width: pw, height: ph, fill: 'transparent' }); svg.appendChild(ov);
+  ov.addEventListener('pointermove', function (ev) {
+    var r = svg.getBoundingClientRect(), sc = r.width / W;
+    var i = Math.round(((ev.clientX - r.left) / sc - padL) / (pw / (len - 1))); i = Math.max(0, Math.min(len - 1, i));
+    var cx = x(i); cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('opacity', 1);
+    opts.series.forEach(function (s, k) { dots[k].setAttribute('cx', cx); dots[k].setAttribute('cy', yy(s.values[i])); dots[k].setAttribute('opacity', 1); });
+    tt.style.opacity = 1; tt.style.left = (cx * sc) + 'px';
+    tt.style.top = (yy(Math.max.apply(null, opts.series.map(function (s) { return s.values[i]; }))) * sc) + 'px';
+    var html = '<div class="tt-d">' + periodLabel(i) + '</div>';
+    opts.series.forEach(function (s) { html += '<div class="tt-r"><span class="sw" style="background:' + s.color + '"></span>' + s.name + '<b>' + opts.fmt(s.values[i]) + '</b></div>'; });
+    tt.innerHTML = html;
+  });
+  ov.addEventListener('pointerleave', function () { cross.setAttribute('opacity', 0); dots.forEach(function (d) { d.setAttribute('opacity', 0); }); tt.style.opacity = 0; });
+}
+
+function renderFunnel() {
+  var sent = sumAt('sent', selMonth), acc = sumAt('accepted', selMonth), rep = sumAt('replied', selMonth);
+  var stages = [
+    { name: 'Sent', v: sent, color: 'var(--fn-1)' },
+    { name: 'Accepted', v: acc, color: 'var(--fn-2)' },
+    { name: 'Replied', v: rep, color: 'var(--fn-3)' }
+  ];
+  var html = '';
+  stages.forEach(function (s, idx) {
+    var w = sent ? Math.max(4, s.v / sent * 100) : 0;
+    var dark = idx < 2;
+    html += '<div class="funnel-stage">' +
+      '<div class="funnel-name">' + s.name + '</div>' +
+      '<div class="funnel-track"><div class="funnel-bar" style="width:' + w + '%;background:' + s.color + ';color:' + (dark ? '#fff' : '#1F2937') + '">' + n(s.v) + '</div></div>' +
+      '<div class="funnel-count">' + w.toFixed(0) + '% of sent</div></div>';
+    if (idx === 0) html += '<div class="funnel-conv">↓ <b>' + pct(acc, sent).toFixed(0) + '%</b> accepted</div>';
+    if (idx === 1) html += '<div class="funnel-conv">↓ <b>' + pct(rep, acc).toFixed(0) + '%</b> replied</div>';
+  });
+  document.getElementById('funnel').innerHTML = html;
+  document.getElementById('funnelSub').textContent = periodLabel(selMonth);
+}
+
+function renderByFounder() {
+  var maxSent = Math.max.apply(null, ORDER.map(function (k) { return FOUNDERS[k].sent[selMonth]; }));
+  var html = '';
+  ORDER.forEach(function (k) {
+    var f = FOUNDERS[k], dim = selected[k] ? '' : 'opacity:.4;';
+    var sent = f.sent[selMonth], acc = f.accepted[selMonth], rep = f.replied[selMonth];
+    var accP = pct(acc, sent), repP = pct(rep, acc);
+    function metric(lab, val, barPct) {
+      return '<div class="fmetric"><div class="fmetric-top"><span class="fmetric-lab">' + lab + '</span><span class="fmetric-val">' + val + '</span></div>' +
+        '<div class="fbar-track"><div class="fbar" style="width:' + Math.min(100, barPct) + '%;background:' + f.color + '"></div></div></div>';
+    }
+    html += '<div class="founder-row" style="' + dim + '">' +
+      '<div class="founder-id"><span class="founder-dot" style="background:' + f.color + '"></span>' + f.name + '</div>' +
+      metric('sent', n(sent), sent / maxSent * 100) +
+      metric('acceptance', accP.toFixed(0) + '%', accP) +
+      metric('reply', repP.toFixed(0) + '%', repP) +
+      '</div>';
+  });
+  document.getElementById('byFounder').innerHTML = html;
+  document.getElementById('byFounderSub').textContent = periodLabel(selMonth) + ' · all founders shown';
+}
+
+function render() {
+  var prevLbl = selMonth > 0 ? periodLabel(selMonth - 1) : '';
+  var sent = sumAt('sent', selMonth), acc = sumAt('accepted', selMonth), rep = sumAt('replied', selMonth);
+  var pSent = selMonth > 0 ? sumAt('sent', selMonth - 1) : null;
+  var pAcc = selMonth > 0 ? sumAt('accepted', selMonth - 1) : null;
+  var pRep = selMonth > 0 ? sumAt('replied', selMonth - 1) : null;
+
+  document.getElementById('kSent').textContent = n(sent);
+  setDelta('kSentD', delta(sent, pSent), prevLbl);
+  document.getElementById('kAcc').textContent = pct(acc, sent).toFixed(0) + '%';
+  setDelta('kAccD', delta(pct(acc, sent), pSent != null ? pct(pAcc, pSent) : null, true), prevLbl);
+  document.getElementById('kRep').textContent = pct(rep, acc).toFixed(0) + '%';
+  setDelta('kRepD', delta(pct(rep, acc), pAcc != null ? pct(pRep, pAcc) : null, true), prevLbl);
+  document.getElementById('kNew').textContent = n(acc);
+  setDelta('kNewD', delta(acc, pAcc), prevLbl);
+
+  renderFunnel();
+  renderByFounder();
+
+  var sentS = seriesOf('sent'), accS = seriesOf('accepted');
+  chart('cVol', 'ttVol', {
+    series: [{ name: 'Sent', values: sentS, color: '#3b89fa' }, { name: 'Accepted', values: accS, color: '#9CA3AF' }],
+    yMin: 0, yMax: 360, grids: [0, 120, 240, 360], area: true, fmt: function (v) { return n(v); }
+  });
+  var accRate = MONTHS.map(function (_, i) { return pct(sumAt('accepted', i), sumAt('sent', i)); });
+  var repRate = MONTHS.map(function (_, i) { return pct(sumAt('replied', i), sumAt('accepted', i)); });
+  chart('cRate', 'ttRate', {
+    series: [{ name: 'Acceptance', values: accRate, color: '#3b89fa' }, { name: 'Reply', values: repRate, color: '#eb6834' }],
+    yMin: 0, yMax: 60, grids: [0, 20, 40, 60], area: false, fmt: function (v) { return v.toFixed(0) + '%'; }
+  });
+  chart('cGrow', 'ttGrow', {
+    series: [{ name: 'Connections', values: seriesOf('cum'), color: '#3b89fa' }],
+    yMin: 0, yMax: 2600, grids: [0, 650, 1300, 1950, 2600], area: true, fmt: function (v) { return n(v); }
+  });
+}
+
+// ---- Founder filter (multi-select; at least one stays on) ----
+(function () {
+  var wrap = document.getElementById('founderFilter');
+  ORDER.forEach(function (k) {
+    var f = FOUNDERS[k];
+    var row = document.createElement('div');
+    row.className = 'filter-item on';
+    row.innerHTML = '<span class="filter-check"></span><span>' + f.name + '</span><span class="founder-swatch" style="background:' + f.color + '"></span>';
+    row.addEventListener('click', function () {
+      if (selected[k] && activeFounders().length === 1) return; // keep at least one
+      selected[k] = !selected[k];
+      row.classList.toggle('on', selected[k]);
+      render();
+    });
+    wrap.appendChild(row);
+  });
+})();
+
+// ---- Period tree: Year > Month (only the months present) ----
+(function () {
+  var root = document.getElementById('periodTree');
+  var byYear = {};
+  MONTHS.forEach(function (m, i) { (byYear[YEARS[i]] = byYear[YEARS[i]] || []).push({ m: m, i: i }); });
+  var leaves = [];
+  Object.keys(byYear).forEach(function (yr) {
+    var node = document.createElement('div'); node.className = 'tree-node' + (yr === '2026' ? ' open' : '');
+    var row = document.createElement('div'); row.className = 'tree-row';
+    row.innerHTML = '<span class="tree-caret">▶</span><span>' + yr + '</span>';
+    row.addEventListener('click', function () { node.classList.toggle('open'); });
+    var ch = document.createElement('div'); ch.className = 'tree-children';
+    byYear[yr].forEach(function (o) {
+      var leaf = document.createElement('div'); leaf.className = 'tree-leaf';
+      leaf.innerHTML = '<span class="tree-dot"></span><span>' + o.m + '</span>';
+      leaf.addEventListener('click', function () {
+        selMonth = o.i;
+        leaves.forEach(function (l) { l.classList.remove('sel'); });
+        leaf.classList.add('sel');
+        render();
+      });
+      leaves.push(leaf); ch.appendChild(leaf);
+      if (o.i === selMonth) leaf.classList.add('sel');
+    });
+    node.appendChild(row); node.appendChild(ch); root.appendChild(node);
+  });
+})();
+
+render();
+</script>
