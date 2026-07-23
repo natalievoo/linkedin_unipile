@@ -16,15 +16,27 @@ possible.
 ## What's here
 
 ```
-dags/linkedin_connections.py     Airflow DAG -- the production pipeline (deploy to Koalake)
-scripts/ingest_connections.py    Standalone twin -- same logic, runs on a laptop (no Airflow)
-.env.example                     Config template (copy to .env; .env is gitignored)
-requirements.txt                 Deps (stdlib-only script; DAG needs `requests`)
+airflow/                         Koalake connector (this is what Koalake deploys)
+├── dags/linkedin_connections.py   the ingestion DAG  (Koalake parses dags/ here)
+├── src/
+│   ├── koalake_io.py              DuckDB + koalake-extension write layer
+│   ├── connector_env.py           config: Koalake project variables -> env fallback
+│   └── unipile_client.py          paginated Unipile relations client
+├── .airflowignore                 keeps src/ + tests/ out of DAG parsing
+└── requirements.txt               task runtime deps (Airflow itself is in the image)
+scripts/ingest_connections.py    Standalone twin -- same result, runs on a laptop via the koalake CLI
+.env.example                     Local config template (copy to .env; .env is gitignored)
 ```
 
-Both do the same thing: **extract** relations from Unipile → **full-refresh** them
-into `linkedin_unipile.main.connections`. Full refresh (delete-all + insert) is
-idempotent: re-running never duplicates, and connections that disappear drop out.
+Structure mirrors `Koalitix/koalake-matomo-dashboard`, the reference Koalake
+connector. Both paths do the same thing: **extract** relations from Unipile →
+**full-refresh** them into `linkedin_unipile.main.connections`. Full refresh
+(`CREATE OR REPLACE TABLE`) is idempotent: re-running replaces, never duplicates.
+
+The DAG writes to Koalake the way Koalake actually supports it — a direct DuckDB
+connection with the `koalake` extension (`LOAD koalake` → `CREATE OR REPLACE
+SECRET` → `ATTACH`), **not** Airflow "Koalake operators" (which don't exist for
+this).
 
 ### Target table
 
@@ -61,21 +73,27 @@ koalake query "SELECT date_trunc('day', connected_at) AS day, count(*) new, \
 
 ## Deploy the DAG to Koalake
 
-The DAG is the scheduled production form. On Koalake you **deploy through the
-platform** (workspace → `S3DagBundle`), not by dropping a file in a `dags/` folder.
-At deploy the platform rewrites `environment_id=0` into the real environment
-connection — which is why running `dags/linkedin_connections.py` directly, undeployed,
-fails at `get_connection` (expected).
+The Koalake project is **connected to this git repo** and clones from it. Koalake
+parses DAGs out of **`airflow/dags/`**, so the DAG appears once the project syncs
+a commit that contains it.
 
-1. Register the Unipile config as **Koalake Variables** on the project so they sync
-   to Airflow (read in the DAG via `KoalakeEnvironment.get(...)`):
-   `UNIPILE_API_KEY`, `UNIPILE_DSN`, `UNIPILE_ACCOUNT_ID`.
-2. Deploy this repo's `dags/` to the project's workspace and publish the bundle.
-3. Before first deploy, confirm the koalake `airflow-provider` operator imports and
-   constructor kwargs (`KoalakeQueryOperator`, `KoalakeInsertOperator`,
-   `KoalakeEnvironment`) match the provider version on the platform.
+1. **Set these project variables** in Koalake (read by `connector_env.py`):
 
-See koalitix-claude `knowledge/airflow/airflow-koalake.md` for the full deploy model.
+   | Variable | Value |
+   |---|---|
+   | `koalake_catalog` | `linkedin_unipile` |
+   | `koalake_token` | a Koalake personal access token (`npat_...`) |
+   | `unipile_api_key` | your Unipile API key |
+   | `unipile_account_id` | the connected LinkedIn account id |
+
+   Optional: `koalake_schema` (default `main`), `koalake_endpoint`, `unipile_dsn`.
+
+2. **Re-sync** the project's git connection so it picks up the latest commit, then
+   check the DAGs view -- `linkedin_connections` should appear.
+3. **Trigger** it. On failure, read the failing task's log.
+
+See koalitix-claude `knowledge/airflow/airflow-koalake.md` and the reference
+connector `Koalitix/koalake-matomo-dashboard` for the full pattern.
 
 ## Secrets
 

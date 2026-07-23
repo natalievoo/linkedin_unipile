@@ -1,0 +1,8 @@
+# Runtime dependencies of the ingestion DAG tasks.
+# Airflow itself and the koalake airflow provider come from the deployment
+# image and are intentionally not pinned here.
+duckdb>=1.5,<2
+pandas>=2.1
+pyarrow>=16
+requests>=2.31
+urllib3>=2
