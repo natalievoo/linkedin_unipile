@@ -1,117 +1,121 @@
 <title>LinkedIn Outreach — Founder Accounts (Mock)</title>
 <style>
 :root {
-  --brand: #3b89fa; --brand-dark: #2760ff; --brand-tint: #e8f1fe;
+  --brand: #3b89fa; --brand-dark: #2f6fd0; --brand-tint: #e8f1fe;
   --text: #1F2937; --text-mid: #6B7280; --text-light: #9CA3AF;
   --bg: #F9FAFB; --canvas: #DEE2E6; --card: #FFFFFF;
-  --border: #E5E7EB; --border-strong: #D1D5DB; --pos: #0EA05A; --neg: #DC5B44;
+  --border: #E5E7EB; --border-strong: #D1D5DB; --pos: #0EA05A;
   --f-tim: #3b89fa; --f-sascha: #eb6834; --f-mark: #1baf7a;
-  /* ordinal blue ramp for the funnel stages */
   --fn-1: #256abf; --fn-2: #3b89fa; --fn-3: #86b6ef;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--canvas); }
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); font-size: 13px; line-height: 1.4; }
-.wrap { width: 100%; max-width: 1440px; margin: 0 auto; background: var(--bg); }
-.page { display: grid; grid-template-columns: 210px 1fr; grid-template-rows: auto auto 1fr; min-height: 810px; }
-
-.logo-box { grid-column: 1; grid-row: 1; background: #fff; height: 92px; display: flex; align-items: center; gap: 9px; padding: 0 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.logo-dots { display: grid; grid-template-columns: 9px 9px; grid-template-rows: 9px 9px; gap: 3px; flex-shrink: 0; }
-.logo-dots span { border-radius: 50%; }
-.logo-dots span:nth-child(1){ background:#6d18fa; } .logo-dots span:nth-child(2){ background:#3b89fa; }
-.logo-dots span:nth-child(3){ background:#ffc400; } .logo-dots span:nth-child(4){ background:#a1db00; }
-.logo-word { font-size: 21px; font-weight: 800; letter-spacing: -0.03em; color: var(--brand-dark); }
-
-.header { grid-column: 2; grid-row: 1; height: 92px; padding: 0 36px; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--border); }
-.header-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
-.header-sub { font-size: 12px; color: var(--text-mid); margin-top: 3px; }
-
-.sidebar { grid-column: 1; grid-row: 2 / 4; background: var(--bg); padding: 22px 20px 16px; border-right: 1px solid var(--border); }
-.sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-mid); margin-bottom: 16px; }
-.filter-group { margin-bottom: 22px; }
-.filter-group-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
-.filter-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; cursor: pointer; user-select: none; }
-.filter-check { width: 13px; height: 13px; border: 1.5px solid var(--border-strong); background: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 3px; }
-.filter-item.on .filter-check { background: var(--brand); border-color: var(--brand); }
-.filter-item.on .filter-check::after { content: ""; width: 6px; height: 6px; background: #fff; border-radius: 1px; }
+html, body { background: var(--bg); }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; color: var(--text); font-size: 13px; line-height: 1.4; }
+.wrap { width: 100%; max-width: 1440px; min-height: 810px; margin: 0 auto; }
+.page { display: grid; grid-template-columns: 210px 1fr; grid-template-rows: auto 1fr auto; min-height: 810px; }
+.logo-box { background: #fff; grid-column: 1; grid-row: 1; height: 132px; display: flex; align-items: center; justify-content: center; padding: 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.logo-svg { width: 176px; height: auto; display: block; }
+.logo-svg .cls-1 { fill:#52a7ff; } .logo-svg .cls-2 { fill:#2760ff; } .logo-svg .cls-3 { fill:#278bff; }
+.header { grid-column: 2; grid-row: 1; padding: 26px 36px 20px; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--border); }
+.header-title { font-size: 23px; font-weight: 700; letter-spacing: -0.01em; }
+.header-sub { font-size: 12px; color: var(--text-mid); margin-top: 4px; }
+.sidebar { grid-column: 1; grid-row: 2 / 4; background: var(--bg); padding: 22px 22px 16px; border-right: 1px solid var(--border); }
+.sidebar-title { font-size: 13px; font-weight: 700; margin-bottom: 18px; }
+.filter-group { margin-bottom: 24px; }
+.filter-group-title { font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+.filter-item { display: flex; align-items: center; gap: 8px; padding: 3px 4px; font-size: 12px; cursor: pointer; user-select: none; border-radius: 5px; }
+.filter-item:hover { background: #fff; }
+.filter-check { width: 12px; height: 12px; border: 1px solid var(--text-mid); background: var(--brand); display: inline-block; flex-shrink: 0; border-radius: 2px; }
+.filter-check.unchecked { background: #fff; }
 .founder-swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-left: auto; }
-
-/* period tree */
-.tree-row, .tree-leaf { display: flex; align-items: center; gap: 7px; padding: 3px 0; font-size: 12px; cursor: pointer; }
-.tree-children { display: none; padding-left: 15px; }
-.tree-node.open > .tree-children { display: block; }
-.tree-caret { width: 8px; color: var(--text-light); font-size: 9px; transition: transform .12s; }
+.tree { font-size: 12px; }
+.tree-row { display: flex; align-items: center; gap: 6px; padding: 4px 5px; border-radius: 5px; cursor: pointer; color: var(--text); font-weight: 600; user-select: none; }
+.tree-row:hover { background: #fff; }
+.tree-caret { width: 8px; font-size: 9px; color: var(--text-light); transition: transform .12s; }
 .tree-node.open > .tree-row .tree-caret { transform: rotate(90deg); }
-.tree-leaf { padding-left: 15px; }
-.tree-dot { width: 11px; height: 11px; border: 1.5px solid var(--border-strong); border-radius: 50%; flex-shrink: 0; }
-.tree-row.sel .tree-dot, .tree-leaf.sel .tree-dot { border-color: var(--brand); background: radial-gradient(var(--brand) 45%, #fff 55%); }
-
-.main { grid-column: 2; grid-row: 2 / 4; padding: 22px 36px 12px; display: flex; flex-direction: column; gap: 16px; }
-
-.kpi-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 16px; }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
-.kpi-hero, .kpi-stat { padding: 16px 20px; display: flex; flex-direction: column; gap: 5px; }
-.kpi-hero { background: linear-gradient(135deg, #f4f8ff 0%, #fff 60%); border-color: #cfe0fb; }
-.kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-mid); }
-.kpi-value { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.kpi-hero .kpi-value { font-size: 38px; color: var(--brand-dark); }
-.kpi-delta { font-size: 12px; font-weight: 600; color: var(--pos); }
-.kpi-delta.dn { color: var(--neg); }
-.kpi-dsub { color: var(--text-light); font-weight: 500; }
-
-.card-head { padding: 13px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.card-title-text { font-size: 13px; font-weight: 700; }
+.tree-children { display: none; padding-left: 13px; }
+.tree-node.open > .tree-children { display: block; }
+.tree-leaf { display: flex; align-items: center; gap: 8px; padding: 3px 5px 3px 15px; border-radius: 5px; cursor: pointer; color: var(--text-mid); font-weight: 500; user-select: none; }
+.tree-leaf:hover { background: #fff; }
+.tree-leaf.selected { color: var(--brand); font-weight: 700; }
+.main { grid-column: 2; grid-row: 2; background: var(--canvas); padding: 24px 32px; display: flex; flex-direction: column; gap: 20px; }
+.card { background: var(--card); border: 1px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.card-head { padding: 12px 20px 10px; border-bottom: 1px solid var(--border); }
+.card-head.with-filters { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.card-title-text { font-size: 14px; font-weight: 700; }
 .card-sub { font-size: 11px; color: var(--text-light); font-weight: 500; }
-.legend { display: flex; gap: 14px; }
-.lg { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-mid); font-weight: 600; }
-.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
-.card-body { padding: 16px 18px; }
-
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card-body { padding: 16px 20px 18px; }
+.kpi-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.kpi-hero { display: inline-flex; flex-direction: column; gap: 4px; min-width: 240px; padding: 20px 26px; }
+.kpi-hero .kpi-label { font-size: 11px; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-hero .kpi-value { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.05; }
+.kpi-stat { display: inline-flex; flex-direction: column; gap: 4px; min-width: 160px; flex: 1; padding: 20px 24px; justify-content: center; }
+.kpi-stat .kpi-label { font-size: 11px; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-stat .kpi-value { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.1; }
+.kpi-delta { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--pos); }
+.kpi-delta.dn { color: var(--text-mid); }
+.kpi-delta .kpi-dsub { color: var(--text-light); font-weight: 500; }
 .chart-wrap { position: relative; }
 .lc { width: 100%; height: auto; display: block; }
-.grid-line { stroke: var(--border); stroke-width: 1; }
-.baseline { stroke: var(--border-strong); stroke-width: 1; }
-.axis-txt { fill: var(--text-light); font-size: 9px; font-variant-numeric: tabular-nums; }
-.area { fill: rgba(59,137,250,0.10); }
-.cross { stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 3 3; }
-.tt { position: absolute; transform: translate(-50%,-115%); background: #fff; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 9px; font-size: 11px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); pointer-events: none; opacity: 0; white-space: nowrap; z-index: 2; }
-.tt-d { font-weight: 700; margin-bottom: 4px; }
-.tt-r { display: flex; align-items: center; gap: 6px; }
-.tt-r b { margin-left: auto; font-variant-numeric: tabular-nums; }
-
+.lc .grid-line { stroke: var(--border); stroke-width: 1; }
+.lc .baseline { stroke: var(--border-strong); stroke-width: 1; }
+.lc .axis-txt { fill: var(--text-light); font-size: 11px; font-family: inherit; }
+.lc .area { fill: #3b89fa; fill-opacity: 0.08; }
+.lc .end-dot { stroke: #fff; stroke-width: 2; }
+.lc .cross { stroke: var(--border-strong); stroke-width: 1; }
+.legend { display: flex; gap: 18px; }
+.legend .lg { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-mid); font-weight: 600; }
+.legend .sw { width: 10px; height: 10px; border-radius: 2px; }
+.tt { position: absolute; pointer-events: none; opacity: 0; transform: translate(-50%, -112%); background: #fff; border: 1px solid var(--border-strong); border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.10); padding: 8px 10px; font-size: 12px; white-space: nowrap; z-index: 5; }
+.tt .tt-d { color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; margin-bottom: 5px; }
+.tt .tt-r { display: flex; align-items: center; gap: 7px; color: var(--text); }
+.tt .tt-r + .tt-r { margin-top: 3px; }
+.tt .sw { width: 8px; height: 8px; border-radius: 2px; }
+.tt b { font-variant-numeric: tabular-nums; margin-left: 2px; }
+.summary-table { width: 100%; border-collapse: collapse; }
+.summary-table th, .summary-table td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.summary-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-light); font-weight: 700; padding-top: 2px; padding-bottom: 9px; border-bottom-color: var(--border-strong); }
+.summary-table th:first-child, .summary-table td:first-child { text-align: left; }
+.summary-table td.name { font-weight: 700; color: var(--text); }
+.summary-table td.name .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+.summary-table td.muted { color: var(--text-mid); font-variant-numeric: tabular-nums; }
+.summary-table td.num { font-variant-numeric: tabular-nums; }
+.summary-table tr.total-row td { background: var(--brand-tint); border-top: 2px solid var(--border-strong); border-bottom: none; font-weight: 700; color: var(--text); }
 /* funnel */
-.funnel { display: flex; flex-direction: column; gap: 4px; }
-.funnel-stage { display: grid; grid-template-columns: 96px 1fr 84px; align-items: center; gap: 12px; }
+.funnel { display: flex; flex-direction: column; gap: 3px; }
+.funnel-stage { display: grid; grid-template-columns: 92px 1fr 92px; align-items: center; gap: 14px; }
 .funnel-name { font-size: 12px; font-weight: 700; }
-.funnel-track { background: var(--bg); border-radius: 6px; height: 30px; overflow: hidden; }
-.funnel-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; color: #fff; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 42px; transition: width .3s; }
-.funnel-count { font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
-.funnel-conv { grid-column: 2; font-size: 11px; color: var(--text-mid); font-weight: 600; padding: 2px 0 2px 2px; }
+.funnel-track { background: var(--bg); border: 1px solid var(--border); height: 30px; overflow: hidden; }
+.funnel-bar { height: 100%; display: flex; align-items: center; padding: 0 10px; color: #fff; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 44px; }
+.funnel-share { font-size: 12px; color: var(--text-mid); text-align: right; font-variant-numeric: tabular-nums; }
+.funnel-conv { grid-column: 2; font-size: 11px; color: var(--text-mid); font-weight: 600; padding: 1px 0 1px 2px; }
 .funnel-conv b { color: var(--text); }
-
-/* by founder */
-.founder-row { display: grid; grid-template-columns: 92px 1fr 1fr 1fr; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border); }
-.founder-row:first-child { border-top: none; }
-.founder-id { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
-.founder-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-.fmetric { display: flex; flex-direction: column; gap: 4px; }
-.fmetric-top { display: flex; justify-content: space-between; font-size: 11px; }
-.fmetric-lab { color: var(--text-mid); font-weight: 600; }
-.fmetric-val { font-weight: 700; font-variant-numeric: tabular-nums; }
-.fbar-track { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; }
-.fbar { height: 100%; border-radius: 3px; }
-.founder-head { display: grid; grid-template-columns: 92px 1fr 1fr 1fr; gap: 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); font-weight: 700; padding-bottom: 8px; }
-
-.banner-row { grid-column: 1 / -1; grid-row: 3; background: #FEF3C7; color: #78350F; text-align: center; padding: 7px; font-size: 11px; letter-spacing: 0.02em; align-self: end; }
+.banner-row { grid-column: 1 / -1; grid-row: 3; background: #FEF3C7; color: #78350F; text-align: center; padding: 6px; font-size: 11px; letter-spacing: 0.02em; }
 </style>
 
 <div class="wrap">
 <div class="page">
 
   <div class="logo-box">
-    <div class="logo-dots"><span></span><span></span><span></span><span></span></div>
-    <div class="logo-word">koalake</div>
+    <svg class="logo-svg" viewBox="698 483 522 108" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="koalake">
+      <g>
+        <polygon class="cls-2" points="894.3 519.83 875.58 519.83 856.75 542.14 855.87 542.14 855.87 500.23 839.57 500.23 839.57 578.62 855.87 578.62 855.87 559.95 860.29 554.91 876.31 578.62 895.41 578.62 872.5 545.29 894.3 519.83"/>
+        <path class="cls-2" d="M938.95,522.87c-4.32-2.54-9.46-3.81-15.4-3.81s-11.08,1.27-15.41,3.81c-4.32,2.54-7.66,6.08-10.01,10.64-2.35,4.55-3.52,9.87-3.52,15.94s1.17,11.31,3.52,15.86c2.35,4.55,5.68,8.1,10.01,10.64,4.33,2.54,9.46,3.81,15.41,3.81s11.08-1.27,15.4-3.81c4.33-2.54,7.66-6.09,10.01-10.64,2.35-4.55,3.52-9.84,3.52-15.86s-1.17-11.39-3.52-15.94c-2.35-4.55-5.68-8.1-10.01-10.64M934.51,558.49c-.93,2.68-2.3,4.79-4.11,6.33-1.81,1.54-4.07,2.32-6.77,2.32s-5.02-.77-6.87-2.32c-1.85-1.54-3.24-3.65-4.17-6.33-.93-2.68-1.4-5.73-1.4-9.15s.47-6.47,1.4-9.15c.93-2.68,2.32-4.8,4.17-6.35,1.85-1.56,4.14-2.33,6.87-2.33s4.96.78,6.77,2.33c1.81,1.56,3.18,3.67,4.11,6.35.93,2.68,1.4,5.73,1.4,9.15s-.47,6.47-1.4,9.15"/>
+        <path class="cls-2" d="M1001.94,523.77c-2.34-1.61-5-2.79-8-3.56-3-.77-6.13-1.15-9.4-1.15-4.7,0-8.82.71-12.38,2.12-3.56,1.42-6.46,3.43-8.71,6.05-2.25,2.62-3.75,5.71-4.52,9.28l15.08,1.23c.56-1.94,1.71-3.55,3.45-4.84,1.73-1.29,4.07-1.93,7-1.93,2.78,0,4.93.66,6.45,1.99,1.52,1.33,2.28,3.2,2.28,5.63v.23c0,1.25-.47,2.2-1.42,2.83-.94.64-2.46,1.12-4.55,1.44-2.09.32-4.85.66-8.27,1.02-2.91.28-5.68.76-8.32,1.45-2.64.69-5,1.71-7.06,3.06-2.07,1.35-3.7,3.14-4.9,5.36-1.2,2.22-1.8,4.96-1.8,8.23,0,3.88.85,7.11,2.55,9.7,1.7,2.59,4.01,4.54,6.95,5.86,2.93,1.31,6.28,1.97,10.03,1.97,2.91,0,5.47-.39,7.69-1.17,2.22-.78,4.12-1.86,5.7-3.25,1.58-1.39,2.85-3,3.79-4.84h.46v8.15h15.46v-39.65c0-3.5-.68-6.5-2.03-9.01-1.35-2.51-3.2-4.58-5.53-6.18M993.31,557.61c0,2.07-.52,3.92-1.57,5.55-1.05,1.63-2.49,2.93-4.33,3.89-1.84.96-3.95,1.43-6.35,1.43s-4.56-.58-6.18-1.74c-1.62-1.16-2.43-2.85-2.43-5.07,0-1.53.39-2.81,1.19-3.85.79-1.03,1.9-1.86,3.33-2.47,1.43-.61,3.1-1.06,5.01-1.34.89-.13,1.89-.27,2.98-.44,1.1-.16,2.2-.36,3.29-.57,1.09-.22,2.09-.46,2.96-.73.88-.27,1.58-.57,2.09-.9v6.24Z"/>
+        <rect class="cls-2" x="1018" y="500.23" width="16.3" height="78.39"/>
+        <path class="cls-2" d="M1086.13,523.77c-2.34-1.61-5-2.79-8-3.56-3-.77-6.13-1.15-9.4-1.15-4.69,0-8.82.71-12.38,2.12-3.56,1.42-6.46,3.43-8.71,6.05-2.24,2.62-3.75,5.71-4.52,9.28l15.08,1.23c.56-1.94,1.71-3.55,3.44-4.84,1.73-1.29,4.07-1.93,7-1.93,2.78,0,4.93.66,6.45,1.99,1.52,1.33,2.28,3.2,2.28,5.63v.23c0,1.25-.47,2.2-1.41,2.83-.95.64-2.46,1.12-4.56,1.44-2.09.32-4.85.66-8.27,1.02-2.91.28-5.68.76-8.32,1.45-2.64.69-5,1.71-7.06,3.06-2.07,1.35-3.7,3.14-4.9,5.36-1.2,2.22-1.8,4.96-1.8,8.23,0,3.88.85,7.11,2.54,9.7,1.7,2.59,4.01,4.54,6.95,5.86,2.93,1.31,6.28,1.97,10.03,1.97,2.91,0,5.47-.39,7.69-1.17,2.22-.78,4.12-1.86,5.7-3.25,1.58-1.39,2.85-3,3.79-4.84h.46v8.15h15.46v-39.65c0-3.5-.68-6.5-2.03-9.01-1.35-2.51-3.2-4.58-5.53-6.18M1077.5,557.61c0,2.07-.52,3.92-1.57,5.55-1.05,1.63-2.49,2.93-4.32,3.89-1.84.96-3.96,1.43-6.35,1.43s-4.56-.58-6.18-1.74-2.43-2.85-2.43-5.07c0-1.53.4-2.81,1.19-3.85.79-1.03,1.9-1.86,3.33-2.47,1.43-.61,3.1-1.06,5.01-1.34.89-.13,1.89-.27,2.98-.44,1.1-.16,2.2-.36,3.29-.57,1.1-.22,2.09-.46,2.97-.73.88-.27,1.57-.57,2.09-.9v6.24Z"/>
+        <polygon class="cls-2" points="1156.92 519.83 1138.21 519.83 1119.38 542.14 1118.5 542.14 1118.5 500.23 1102.19 500.23 1102.19 578.62 1118.5 578.62 1118.5 559.95 1122.91 554.91 1138.93 578.62 1158.03 578.62 1135.12 545.29 1156.92 519.83"/>
+        <path class="cls-2" d="M1212.71,553.4v-4.48c0-5-.7-9.37-2.1-13.11-1.4-3.74-3.36-6.85-5.88-9.32-2.51-2.47-5.45-4.33-8.8-5.57-3.36-1.24-6.97-1.86-10.85-1.86-5.77,0-10.79,1.28-15.06,3.83-4.27,2.55-7.58,6.11-9.93,10.68-2.35,4.57-3.52,9.87-3.52,15.92s1.17,11.57,3.52,16.1c2.35,4.53,5.7,8.02,10.05,10.49,4.35,2.46,9.55,3.69,15.6,3.69,4.85,0,9.13-.75,12.84-2.24,3.71-1.49,6.75-3.58,9.11-6.28,2.36-2.69,3.92-5.85,4.69-9.47l-15.08-.99c-.56,1.48-1.38,2.73-2.45,3.75-1.07,1.02-2.36,1.79-3.87,2.3-1.51.51-3.17.77-4.98.77-2.73,0-5.09-.57-7.08-1.72-1.99-1.15-3.53-2.78-4.61-4.9-1.08-2.12-1.63-4.63-1.63-7.54v-.04h40.04ZM1178.78,532.94c1.9-1.13,4.09-1.7,6.56-1.7s4.46.52,6.26,1.55c1.8,1.03,3.21,2.46,4.23,4.27,1.02,1.81,1.53,3.89,1.53,6.24h-24.65c.1-2.11.62-4.05,1.61-5.8,1.07-1.9,2.56-3.42,4.46-4.56"/>
+      </g>
+      <g>
+        <path class="cls-2" d="M747.94,523.52c1.93,0,3.5-1.57,3.5-3.5s-1.57-3.5-3.5-3.5-3.5,1.57-3.5,3.5,1.57,3.5,3.5,3.5"/>
+        <path class="cls-2" d="M770.78,523.52c1.93,0,3.5-1.57,3.5-3.5s-1.57-3.5-3.5-3.5-3.5,1.57-3.5,3.5,1.57,3.5,3.5,3.5"/>
+        <path class="cls-2" d="M756.2,535.16c1.24,0,2.36-.52,3.16-1.35.8.83,1.92,1.35,3.17,1.35,1.67,0,3.12-.93,3.87-2.29.33-.61.11-1.37-.49-1.7-.61-.33-1.36-.11-1.7.49-.33.59-.96.99-1.68.99-1.06,0-1.91-.86-1.92-1.92,0-.12-.04-.24-.07-.35.52-.12,1.02-.32,1.48-.61.75-.46,1.36-1.11,1.77-1.85.58-1.06.65-2.33.32-3.49l-.54-1.9c-.53-1.87-2.24-3.16-4.19-3.16s-3.66,1.29-4.19,3.16l-.6,2.12c-.31,1.1-.17,2.28.38,3.28v.02c.42.74,1.02,1.38,1.76,1.83.46.29.95.48,1.46.6-.03.12-.07.23-.07.36,0,1.06-.86,1.91-1.92,1.92-.73,0-1.35-.4-1.68-.99-.33-.61-1.09-.83-1.7-.49-.6.33-.82,1.09-.49,1.7.75,1.36,2.2,2.29,3.87,2.29"/>
+        <path class="cls-2" d="M807.89,520.15l-11.93-7.5-1.57-.99c2.35-1.3,4.21-3.16,5.35-5.39.75-1.48,1.18-3.13,1.18-4.82.01-1.43-.3-2.87-.93-4.22-.62-1.34-1.55-2.58-2.73-3.62l-.09-.08c-1-.9-2.09-1.61-3.2-2.16-.19-.1-.4-.21-.54-.38-.03-.03-.06-.08-.08-.12-.05-.11-.04-.24-.04-.36.02-.15.02-.31.02-.47,0-2.03-1.12-3.92-2.94-4.88-1.59-.83-3.28-1.15-5.02-1.15-2.57,0-5.29.71-7.86,2.2-2.57,1.48-4.96,3.79-6.62,6.92-.49.92-.91,1.91-1.26,2.97l-7.43-4.67c-1.72-1.08-3.91-1.09-5.64,0l-2.55,1.6-4.89,3.08c-.35-1.06-.77-2.06-1.26-2.98-1.66-3.13-4.05-5.44-6.62-6.92-2.57-1.49-5.29-2.2-7.86-2.2-1.74,0-3.43.32-5.02,1.15-1.82.96-2.94,2.85-2.94,4.88,0,.16,0,.32.02.47,0,.12.01.25-.04.36-.02.04-.05.09-.08.12-.14.17-.35.28-.54.38-1.11.55-2.2,1.26-3.2,2.16l-.09.08c-1.18,1.04-2.11,2.28-2.73,3.62-.63,1.35-.94,2.79-.93,4.22,0,1.69.43,3.34,1.18,4.82,1.14,2.23,3,4.1,5.35,5.4l-1.56.98-11.94,7.49c-2.92,1.84-2.93,6.11,0,7.96l9.14,5.74.84.53,9.85,6.18,6.45,4.05,9.85,6.19,9.57,6.02c1.73,1.08,3.93,1.08,5.65,0l9.56-6.02,9.86-6.18,6.43-4.05,9.86-6.19.84-.53,9.13-5.75c2.93-1.84,2.93-6.1,0-7.94M778.61,494.99c1.19-1.48,2.66-2.44,4.1-2.97.67-.25,1.32-.39,1.91-.46.49-.03,1.27.11,1.41.99h.01c.07.3.15.6.27.91.38,1.04,1.05,2.13,2.02,3.04.65.61,1.42,1.14,2.28,1.57.6.31,1.12.65,1.55,1.04l.11.1h.01c.47.42.74.82.91,1.18.16.36.23.69.23,1.06,0,.43-.1.9-.36,1.42-.26.51-.68,1.05-1.27,1.54-.73.61-1.73,1.15-3,1.47-1.86.37-3.14.3-5.7-1.32l-.05-.03-1.08-.68-5.7-3.58c.45-2.31,1.31-3.99,2.35-5.28M745.55,510.74l5.42-3.41c5.14-3.23,11.68-3.23,16.82,0l5.43,3.41c9.86,6.2,9.86,20.57,0,26.76l-5.42,3.41c-5.14,3.24-11.68,3.24-16.82,0l-5.43-3.41c-9.86-6.19-9.86-20.56,0-26.76M725.56,500.39c.17-.36.44-.76.91-1.18h.01l.11-.1c.43-.39.95-.73,1.55-1.04.86-.43,1.63-.96,2.28-1.57.97-.91,1.64-2,2.02-3.04.12-.31.2-.61.27-.91h.01c.14-.88.92-1.02,1.41-.99.59.07,1.24.21,1.91.46,1.44.53,2.91,1.49,4.1,2.97,1.04,1.29,1.9,2.98,2.35,5.29l-5.69,3.57-1.14.71c-2.56,1.62-3.84,1.69-5.7,1.32-1.27-.32-2.27-.86-3-1.47-.59-.49-1.01-1.03-1.27-1.54-.26-.52-.36-.99-.36-1.42,0-.37.07-.7.23-1.06"/>
+        <path class="cls-3" d="M809.93,540.91c1.97,1.24,1.97,4.11,0,5.34l-12.04,7.56-9.85,6.2-24.32,15.28c-2.66,1.67-6.05,1.67-8.72,0l-24.33-15.28-9.85-6.2-12.05-7.57c-1.97-1.24-1.97-4.11,0-5.35l5.6-3.51,9.85,6.18,3.7,2.32,2.75,1.73,9.85,6.2,14.48,9.1c2.66,1.67,6.05,1.67,8.72,0l14.47-9.1,9.84-6.19,1.91-1.21,4.53-2.84,9.86-6.2,5.6,3.52Z"/>
+        <path class="cls-1" d="M804.34,556.83h-.01l-9.86,6.19-29.69,18.67-1.06.67c-2.67,1.68-6.05,1.68-8.72,0l-30.77-19.34-9.86-6.2-5.61,3.52c-1.97,1.24-1.97,4.11,0,5.34l46.23,29.05c2.66,1.67,6.05,1.67,8.72,0l46.21-29.05c1.97-1.24,1.97-4.11,0-5.34l-5.59-3.52Z"/>
+      </g>
+    </svg>
   </div>
 
   <div class="header">
@@ -121,12 +125,10 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; co
 
   <aside class="sidebar">
     <div class="sidebar-title">Filters</div>
-
     <div class="filter-group">
       <div class="filter-group-title">Period</div>
-      <div id="periodTree"></div>
+      <div class="tree" id="periodTree"></div>
     </div>
-
     <div class="filter-group">
       <div class="filter-group-title">Founder account</div>
       <div id="founderFilter"></div>
@@ -159,61 +161,39 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; co
     </div>
 
     <div class="card">
-      <div class="card-head">
-        <span class="card-title-text">Outreach Funnel</span>
-        <span class="card-sub" id="funnelSub"></span>
-      </div>
-      <div class="card-body">
-        <div class="funnel" id="funnel"></div>
-      </div>
+      <div class="card-head with-filters"><span class="card-title-text">Outreach Funnel</span><span class="card-sub" id="funnelSub"></span></div>
+      <div class="card-body"><div class="funnel" id="funnel"></div></div>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title-text">Requests Sent &amp; Accepted</span>
-          <div class="legend">
-            <span class="lg"><span class="sw" style="background:#3b89fa"></span> Sent</span>
-            <span class="lg"><span class="sw" style="background:#9CA3AF"></span> Accepted</span>
-          </div>
-        </div>
-        <div class="card-body chart-wrap">
-          <svg id="cVol" class="lc" viewBox="0 0 560 200" role="img" aria-label="Requests sent and accepted per month"></svg>
-          <div class="tt" id="ttVol"></div>
-        </div>
+    <div class="card">
+      <div class="card-head with-filters">
+        <span class="card-title-text">Requests Sent &amp; Accepted Over Time</span>
+        <div class="legend"><span class="lg"><span class="sw" style="background:#3b89fa"></span> Sent</span><span class="lg"><span class="sw" style="background:#9CA3AF"></span> Accepted</span></div>
       </div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title-text">Acceptance &amp; Reply Rate</span>
-          <div class="legend">
-            <span class="lg"><span class="sw" style="background:#3b89fa"></span> Acceptance %</span>
-            <span class="lg"><span class="sw" style="background:#eb6834"></span> Reply %</span>
-          </div>
-        </div>
-        <div class="card-body chart-wrap">
-          <svg id="cRate" class="lc" viewBox="0 0 560 200" role="img" aria-label="Acceptance and reply rate per month"></svg>
-          <div class="tt" id="ttRate"></div>
-        </div>
+      <div class="card-body chart-wrap"><svg id="cVol" class="lc" viewBox="0 0 720 190" role="img" aria-label="Requests sent and accepted per month"></svg><div class="tt" id="ttVol"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head with-filters">
+        <span class="card-title-text">Acceptance &amp; Reply Rate Over Time</span>
+        <div class="legend"><span class="lg"><span class="sw" style="background:#3b89fa"></span> Acceptance %</span><span class="lg"><span class="sw" style="background:#eb6834"></span> Reply %</span></div>
+      </div>
+      <div class="card-body chart-wrap"><svg id="cRate" class="lc" viewBox="0 0 720 190" role="img" aria-label="Acceptance and reply rate per month"></svg><div class="tt" id="ttRate"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head with-filters"><span class="card-title-text">By Founder</span><span class="card-sub" id="byFounderSub"></span></div>
+      <div class="card-body" style="padding:0;">
+        <table class="summary-table">
+          <thead><tr><th>Founder</th><th>Requests sent</th><th>Accepted</th><th>Acceptance</th><th>Reply rate</th></tr></thead>
+          <tbody id="byFounderBody"></tbody>
+        </table>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-head">
-        <span class="card-title-text">By Founder</span>
-        <span class="card-sub" id="byFounderSub"></span>
-      </div>
-      <div class="card-body">
-        <div class="founder-head"><span>Founder</span><span>Requests sent</span><span>Acceptance</span><span>Reply</span></div>
-        <div id="byFounder"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head"><span class="card-title-text">Combined Network Growth</span><span class="card-sub">cumulative connections</span></div>
-      <div class="card-body chart-wrap">
-        <svg id="cGrow" class="lc" viewBox="0 0 1150 200" role="img" aria-label="Cumulative connections over time"></svg>
-        <div class="tt" id="ttGrow"></div>
-      </div>
+      <div class="card-head"><span class="card-title-text">Combined Network Growth</span></div>
+      <div class="card-body chart-wrap"><svg id="cGrow" class="lc" viewBox="0 0 720 190" role="img" aria-label="Cumulative connections over time"></svg><div class="tt" id="ttGrow"></div></div>
     </div>
 
   </div>
@@ -225,78 +205,66 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; co
 
 <script>
 var NS = 'http://www.w3.org/2000/svg';
-
-// ---- Placeholder data: 12 months (Aug 2025 → Jul 2026), per founder ----
-var MONTHS = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul'];
+var months = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul'];
 var YEARS  = [2025,2025,2025,2025,2025,2026,2026,2026,2026,2026,2026,2026];
+var ticks = [0,3,6,9,11];
+
 var FOUNDERS = {
   tim:    { name:'Tim',    color:'#3b89fa', sent:[95,102,110,88,70,120,125,130,128,135,140,145], accBase:0.38, repBase:0.24, connBase:820 },
   sascha: { name:'Sascha', color:'#eb6834', sent:[70,74,80,66,52,85,88,92,90,95,98,102],       accBase:0.41, repBase:0.20, connBase:540 },
   mark:   { name:'Mark',   color:'#1baf7a', sent:[55,58,62,50,40,66,70,72,71,74,76,80],         accBase:0.33, repBase:0.19, connBase:300 }
 };
 var ORDER = ['tim','sascha','mark'];
-
-// derive accepted / replied / cumulative per founder (slight upward drift = "improving")
 ORDER.forEach(function (key) {
-  var f = FOUNDERS[key];
-  f.accepted = []; f.replied = []; f.cum = [];
-  var run = f.connBase;
+  var f = FOUNDERS[key]; f.accepted = []; f.replied = []; f.cum = []; var run = f.connBase;
   for (var i = 0; i < 12; i++) {
-    var accR = Math.min(0.6, f.accBase + (i - 6) * 0.004);
-    var repR = Math.min(0.5, f.repBase + (i - 6) * 0.002);
-    var acc = Math.round(f.sent[i] * accR);
-    var rep = Math.round(acc * repR);
-    f.accepted.push(acc); f.replied.push(rep);
-    run += acc; f.cum.push(run);
+    var acc = Math.round(f.sent[i] * Math.min(0.6, f.accBase + (i - 6) * 0.004));
+    var rep = Math.round(acc * Math.min(0.5, f.repBase + (i - 6) * 0.002));
+    f.accepted.push(acc); f.replied.push(rep); run += acc; f.cum.push(run);
   }
 });
 
 var selected = { tim: true, sascha: true, mark: true };
-var selMonth = 11; // default Jul 2026
-
-function activeFounders() { return ORDER.filter(function (k) { return selected[k]; }); }
-function sumAt(field, i) { return activeFounders().reduce(function (s, k) { return s + FOUNDERS[k][field][i]; }, 0); }
-function seriesOf(field) { return MONTHS.map(function (_, i) { return sumAt(field, i); }); }
+var selMonth = 11;
+function active() { return ORDER.filter(function (k) { return selected[k]; }); }
+function sumAt(field, i) { return active().reduce(function (s, k) { return s + FOUNDERS[k][field][i]; }, 0); }
+function seriesOf(field) { return months.map(function (_, i) { return sumAt(field, i); }); }
 function n(v) { return Math.round(v).toLocaleString('en-US'); }
 function pct(a, b) { return b ? (a / b * 100) : 0; }
-function periodLabel(i) { return MONTHS[i] + ' ' + YEARS[i]; }
+function periodLabel(i) { return months[i] + ' ' + YEARS[i]; }
 
 function delta(cur, prev, isPct) {
   if (prev == null) return { txt: '', dn: false };
   if (isPct) { var d = cur - prev; return { txt: (d >= 0 ? '+' : '') + d.toFixed(1) + ' pt', dn: d < 0 }; }
   if (prev === 0) return { txt: '', dn: false };
-  var p = (cur - prev) / prev * 100;
-  return { txt: (p >= 0 ? '+' : '') + p.toFixed(1) + '%', dn: p < 0 };
+  var p = (cur - prev) / prev * 100; return { txt: (p >= 0 ? '+' : '') + p.toFixed(1) + '%', dn: p < 0 };
 }
 function setDelta(id, d, prevLbl) {
-  var el = document.getElementById(id);
-  el.className = 'kpi-delta' + (d.dn ? ' dn' : '');
+  var el = document.getElementById(id); el.className = 'kpi-delta' + (d.dn ? ' dn' : '');
   el.innerHTML = d.txt ? d.txt + ' <span class="kpi-dsub">vs ' + prevLbl + '</span>' : '<span class="kpi-dsub">—</span>';
 }
 
-// ---- generic line/area chart (adapted from the matomo mock) ----
 function chart(id, ttId, opts) {
   var svg = document.getElementById(id), tt = document.getElementById(ttId);
   svg.innerHTML = '';
-  var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
-  var padL = 40, padR = 14, padT = 12, padB = 22;
-  var pw = W - padL - padR, ph = H - padT - padB, len = MONTHS.length;
+  var W = 720, H = 190, padL = 46, padR = 16, padT = 12, padB = 24;
+  var pw = W - padL - padR, ph = H - padT - padB, len = months.length;
   function x(i) { return padL + i * (pw / (len - 1)); }
   function yy(v) { return padT + ph * (1 - (v - opts.yMin) / (opts.yMax - opts.yMin)); }
   function el(t, a, c) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); if (c) e.setAttribute('class', c); return e; }
   opts.grids.forEach(function (g) {
     svg.appendChild(el('line', { x1: padL, y1: yy(g), x2: padL + pw, y2: yy(g) }, g === opts.yMin ? 'baseline' : 'grid-line'));
-    var t = el('text', { x: padL - 7, y: yy(g) + 4, 'text-anchor': 'end' }, 'axis-txt'); t.textContent = opts.fmt(g); svg.appendChild(t);
+    var t = el('text', { x: padL - 8, y: yy(g) + 4, 'text-anchor': 'end' }, 'axis-txt'); t.textContent = opts.fmt(g); svg.appendChild(t);
   });
-  [0, 3, 6, 9, 11].forEach(function (i) {
-    var t = el('text', { x: x(i), y: H - 5, 'text-anchor': i === 0 ? 'start' : (i === len - 1 ? 'end' : 'middle') }, 'axis-txt'); t.textContent = MONTHS[i]; svg.appendChild(t);
+  ticks.forEach(function (i) {
+    var t = el('text', { x: x(i), y: H - 6, 'text-anchor': i === 0 ? 'start' : (i === len - 1 ? 'end' : 'middle') }, 'axis-txt'); t.textContent = months[i]; svg.appendChild(t);
   });
   function pts(vals) { return vals.map(function (v, i) { return x(i) + ',' + yy(v); }).join(' '); }
   if (opts.area) svg.appendChild(el('polygon', { points: padL + ',' + yy(opts.yMin) + ' ' + pts(opts.series[0].values) + ' ' + (padL + pw) + ',' + yy(opts.yMin) }, 'area'));
   opts.series.forEach(function (s) { svg.appendChild(el('polyline', { points: pts(s.values), fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' })); });
-  opts.series.forEach(function (s) { svg.appendChild(el('circle', { cx: x(len - 1), cy: yy(s.values[len - 1]), r: 3.5, fill: s.color })); });
+  opts.series.forEach(function (s) { svg.appendChild(el('circle', { cx: x(len - 1), cy: yy(s.values[len - 1]), r: 4, fill: s.color }, 'end-dot')); });
   var cross = el('line', { y1: padT, y2: padT + ph, opacity: 0 }, 'cross'); svg.appendChild(cross);
-  var dots = opts.series.map(function (s) { var d = el('circle', { r: 4, fill: s.color, opacity: 0 }); svg.appendChild(d); return d; });
+  var dots = opts.series.map(function (s) { var d = el('circle', { r: 4, fill: s.color, opacity: 0 }, 'end-dot'); svg.appendChild(d); return d; });
   var ov = el('rect', { x: padL, y: padT, width: pw, height: ph, fill: 'transparent' }); svg.appendChild(ov);
   ov.addEventListener('pointermove', function (ev) {
     var r = svg.getBoundingClientRect(), sc = r.width / W;
@@ -314,127 +282,96 @@ function chart(id, ttId, opts) {
 
 function renderFunnel() {
   var sent = sumAt('sent', selMonth), acc = sumAt('accepted', selMonth), rep = sumAt('replied', selMonth);
-  var stages = [
-    { name: 'Sent', v: sent, color: 'var(--fn-1)' },
-    { name: 'Accepted', v: acc, color: 'var(--fn-2)' },
-    { name: 'Replied', v: rep, color: 'var(--fn-3)' }
-  ];
+  var stages = [['Sent', sent, 'var(--fn-1)', '#fff'], ['Accepted', acc, 'var(--fn-2)', '#fff'], ['Replied', rep, 'var(--fn-3)', '#1F2937']];
   var html = '';
   stages.forEach(function (s, idx) {
-    var w = sent ? Math.max(4, s.v / sent * 100) : 0;
-    var dark = idx < 2;
-    html += '<div class="funnel-stage">' +
-      '<div class="funnel-name">' + s.name + '</div>' +
-      '<div class="funnel-track"><div class="funnel-bar" style="width:' + w + '%;background:' + s.color + ';color:' + (dark ? '#fff' : '#1F2937') + '">' + n(s.v) + '</div></div>' +
-      '<div class="funnel-count">' + w.toFixed(0) + '% of sent</div></div>';
-    if (idx === 0) html += '<div class="funnel-conv">↓ <b>' + pct(acc, sent).toFixed(0) + '%</b> accepted</div>';
-    if (idx === 1) html += '<div class="funnel-conv">↓ <b>' + pct(rep, acc).toFixed(0) + '%</b> replied</div>';
+    var w = sent ? Math.max(4, s[1] / sent * 100) : 0;
+    html += '<div class="funnel-stage"><div class="funnel-name">' + s[0] + '</div>' +
+      '<div class="funnel-track"><div class="funnel-bar" style="width:' + w + '%;background:' + s[2] + ';color:' + s[3] + '">' + n(s[1]) + '</div></div>' +
+      '<div class="funnel-share">' + w.toFixed(0) + '% of sent</div></div>';
+    if (idx === 0) html += '<div class="funnel-conv">↓ <b>' + pct(acc, sent).toFixed(0) + '%</b> of sent requests were accepted</div>';
+    if (idx === 1) html += '<div class="funnel-conv">↓ <b>' + pct(rep, acc).toFixed(0) + '%</b> of accepted connections replied</div>';
   });
   document.getElementById('funnel').innerHTML = html;
   document.getElementById('funnelSub').textContent = periodLabel(selMonth);
 }
 
 function renderByFounder() {
-  var maxSent = Math.max.apply(null, ORDER.map(function (k) { return FOUNDERS[k].sent[selMonth]; }));
   var html = '';
   ORDER.forEach(function (k) {
-    var f = FOUNDERS[k], dim = selected[k] ? '' : 'opacity:.4;';
+    var f = FOUNDERS[k], dim = selected[k] ? '' : ' style="opacity:.4"';
     var sent = f.sent[selMonth], acc = f.accepted[selMonth], rep = f.replied[selMonth];
-    var accP = pct(acc, sent), repP = pct(rep, acc);
-    function metric(lab, val, barPct) {
-      return '<div class="fmetric"><div class="fmetric-top"><span class="fmetric-lab">' + lab + '</span><span class="fmetric-val">' + val + '</span></div>' +
-        '<div class="fbar-track"><div class="fbar" style="width:' + Math.min(100, barPct) + '%;background:' + f.color + '"></div></div></div>';
-    }
-    html += '<div class="founder-row" style="' + dim + '">' +
-      '<div class="founder-id"><span class="founder-dot" style="background:' + f.color + '"></span>' + f.name + '</div>' +
-      metric('sent', n(sent), sent / maxSent * 100) +
-      metric('acceptance', accP.toFixed(0) + '%', accP) +
-      metric('reply', repP.toFixed(0) + '%', repP) +
-      '</div>';
+    html += '<tr' + dim + '><td class="name"><span class="dot" style="background:' + f.color + '"></span>' + f.name + '</td>' +
+      '<td class="num">' + n(sent) + '</td><td class="num muted">' + n(acc) + '</td>' +
+      '<td class="num">' + pct(acc, sent).toFixed(0) + '%</td><td class="num">' + pct(rep, acc).toFixed(0) + '%</td></tr>';
   });
-  document.getElementById('byFounder').innerHTML = html;
+  var tSent = sumAt('sent', selMonth), tAcc = sumAt('accepted', selMonth), tRep = sumAt('replied', selMonth);
+  html += '<tr class="total-row"><td class="name">Combined</td><td class="num">' + n(tSent) + '</td><td class="num">' + n(tAcc) +
+    '</td><td class="num">' + pct(tAcc, tSent).toFixed(0) + '%</td><td class="num">' + pct(tRep, tAcc).toFixed(0) + '%</td></tr>';
+  document.getElementById('byFounderBody').innerHTML = html;
   document.getElementById('byFounderSub').textContent = periodLabel(selMonth) + ' · all founders shown';
 }
 
 function render() {
   var prevLbl = selMonth > 0 ? periodLabel(selMonth - 1) : '';
   var sent = sumAt('sent', selMonth), acc = sumAt('accepted', selMonth), rep = sumAt('replied', selMonth);
-  var pSent = selMonth > 0 ? sumAt('sent', selMonth - 1) : null;
-  var pAcc = selMonth > 0 ? sumAt('accepted', selMonth - 1) : null;
-  var pRep = selMonth > 0 ? sumAt('replied', selMonth - 1) : null;
+  var pSent = selMonth > 0 ? sumAt('sent', selMonth - 1) : null, pAcc = selMonth > 0 ? sumAt('accepted', selMonth - 1) : null, pRep = selMonth > 0 ? sumAt('replied', selMonth - 1) : null;
 
-  document.getElementById('kSent').textContent = n(sent);
-  setDelta('kSentD', delta(sent, pSent), prevLbl);
-  document.getElementById('kAcc').textContent = pct(acc, sent).toFixed(0) + '%';
-  setDelta('kAccD', delta(pct(acc, sent), pSent != null ? pct(pAcc, pSent) : null, true), prevLbl);
-  document.getElementById('kRep').textContent = pct(rep, acc).toFixed(0) + '%';
-  setDelta('kRepD', delta(pct(rep, acc), pAcc != null ? pct(pRep, pAcc) : null, true), prevLbl);
-  document.getElementById('kNew').textContent = n(acc);
-  setDelta('kNewD', delta(acc, pAcc), prevLbl);
+  document.getElementById('kSent').textContent = n(sent); setDelta('kSentD', delta(sent, pSent), prevLbl);
+  document.getElementById('kAcc').textContent = pct(acc, sent).toFixed(0) + '%'; setDelta('kAccD', delta(pct(acc, sent), pSent != null ? pct(pAcc, pSent) : null, true), prevLbl);
+  document.getElementById('kRep').textContent = pct(rep, acc).toFixed(0) + '%'; setDelta('kRepD', delta(pct(rep, acc), pAcc != null ? pct(pRep, pAcc) : null, true), prevLbl);
+  document.getElementById('kNew').textContent = n(acc); setDelta('kNewD', delta(acc, pAcc), prevLbl);
 
-  renderFunnel();
-  renderByFounder();
+  renderFunnel(); renderByFounder();
 
-  var sentS = seriesOf('sent'), accS = seriesOf('accepted');
-  chart('cVol', 'ttVol', {
-    series: [{ name: 'Sent', values: sentS, color: '#3b89fa' }, { name: 'Accepted', values: accS, color: '#9CA3AF' }],
-    yMin: 0, yMax: 360, grids: [0, 120, 240, 360], area: true, fmt: function (v) { return n(v); }
-  });
-  var accRate = MONTHS.map(function (_, i) { return pct(sumAt('accepted', i), sumAt('sent', i)); });
-  var repRate = MONTHS.map(function (_, i) { return pct(sumAt('replied', i), sumAt('accepted', i)); });
-  chart('cRate', 'ttRate', {
-    series: [{ name: 'Acceptance', values: accRate, color: '#3b89fa' }, { name: 'Reply', values: repRate, color: '#eb6834' }],
-    yMin: 0, yMax: 60, grids: [0, 20, 40, 60], area: false, fmt: function (v) { return v.toFixed(0) + '%'; }
-  });
-  chart('cGrow', 'ttGrow', {
-    series: [{ name: 'Connections', values: seriesOf('cum'), color: '#3b89fa' }],
-    yMin: 0, yMax: 2600, grids: [0, 650, 1300, 1950, 2600], area: true, fmt: function (v) { return n(v); }
-  });
+  chart('cVol', 'ttVol', { series: [{ name: 'Sent', values: seriesOf('sent'), color: '#3b89fa' }, { name: 'Accepted', values: seriesOf('accepted'), color: '#9CA3AF' }], yMin: 0, yMax: 360, grids: [0, 120, 240, 360], area: true, fmt: function (v) { return n(v); } });
+  var accRate = months.map(function (_, i) { return pct(sumAt('accepted', i), sumAt('sent', i)); });
+  var repRate = months.map(function (_, i) { return pct(sumAt('replied', i), sumAt('accepted', i)); });
+  chart('cRate', 'ttRate', { series: [{ name: 'Acceptance', values: accRate, color: '#3b89fa' }, { name: 'Reply', values: repRate, color: '#eb6834' }], yMin: 0, yMax: 60, grids: [0, 20, 40, 60], area: false, fmt: function (v) { return v.toFixed(0) + '%'; } });
+  chart('cGrow', 'ttGrow', { series: [{ name: 'Connections', values: seriesOf('cum'), color: '#3b89fa' }], yMin: 0, yMax: 2600, grids: [0, 650, 1300, 1950, 2600], area: true, fmt: function (v) { return n(v); } });
 }
 
-// ---- Founder filter (multi-select; at least one stays on) ----
 (function () {
   var wrap = document.getElementById('founderFilter');
   ORDER.forEach(function (k) {
     var f = FOUNDERS[k];
-    var row = document.createElement('div');
-    row.className = 'filter-item on';
+    var row = document.createElement('div'); row.className = 'filter-item';
     row.innerHTML = '<span class="filter-check"></span><span>' + f.name + '</span><span class="founder-swatch" style="background:' + f.color + '"></span>';
     row.addEventListener('click', function () {
-      if (selected[k] && activeFounders().length === 1) return; // keep at least one
+      if (selected[k] && active().length === 1) return;
       selected[k] = !selected[k];
-      row.classList.toggle('on', selected[k]);
+      row.querySelector('.filter-check').classList.toggle('unchecked', !selected[k]);
       render();
     });
     wrap.appendChild(row);
   });
 })();
 
-// ---- Period tree: Year > Month (only the months present) ----
 (function () {
   var root = document.getElementById('periodTree');
-  var byYear = {};
-  MONTHS.forEach(function (m, i) { (byYear[YEARS[i]] = byYear[YEARS[i]] || []).push({ m: m, i: i }); });
+  var Q = function (m) { return ['Jan','Feb','Mar'].indexOf(m) > -1 ? 'Q1' : ['Apr','May','Jun'].indexOf(m) > -1 ? 'Q2' : ['Jul','Aug','Sep'].indexOf(m) > -1 ? 'Q3' : 'Q4'; };
+  var tree = {};
+  months.forEach(function (m, i) { var y = YEARS[i], q = Q(m); (tree[y] = tree[y] || {}); (tree[y][q] = tree[y][q] || []).push({ m: m, i: i }); });
   var leaves = [];
-  Object.keys(byYear).forEach(function (yr) {
-    var node = document.createElement('div'); node.className = 'tree-node' + (yr === '2026' ? ' open' : '');
-    var row = document.createElement('div'); row.className = 'tree-row';
-    row.innerHTML = '<span class="tree-caret">▶</span><span>' + yr + '</span>';
-    row.addEventListener('click', function () { node.classList.toggle('open'); });
-    var ch = document.createElement('div'); ch.className = 'tree-children';
-    byYear[yr].forEach(function (o) {
-      var leaf = document.createElement('div'); leaf.className = 'tree-leaf';
-      leaf.innerHTML = '<span class="tree-dot"></span><span>' + o.m + '</span>';
-      leaf.addEventListener('click', function () {
-        selMonth = o.i;
-        leaves.forEach(function (l) { l.classList.remove('sel'); });
-        leaf.classList.add('sel');
-        render();
+  Object.keys(tree).forEach(function (y) {
+    var yNode = document.createElement('div'); yNode.className = 'tree-node' + (y === '2026' ? ' open' : '');
+    var yRow = document.createElement('div'); yRow.className = 'tree-row'; yRow.innerHTML = '<span class="tree-caret">▶</span><span>' + y + '</span>';
+    yRow.addEventListener('click', function () { yNode.classList.toggle('open'); });
+    var yCh = document.createElement('div'); yCh.className = 'tree-children';
+    Object.keys(tree[y]).forEach(function (q) {
+      var qNode = document.createElement('div'); qNode.className = 'tree-node' + (y === '2026' && q === 'Q3' ? ' open' : '');
+      var qRow = document.createElement('div'); qRow.className = 'tree-row'; qRow.innerHTML = '<span class="tree-caret">▶</span><span>' + q + '</span>';
+      qRow.addEventListener('click', function () { qNode.classList.toggle('open'); });
+      var qCh = document.createElement('div'); qCh.className = 'tree-children';
+      tree[y][q].forEach(function (o) {
+        var leaf = document.createElement('div'); leaf.className = 'tree-leaf'; leaf.innerHTML = '<span>' + o.m + ' ' + y + '</span>';
+        leaf.addEventListener('click', function () { selMonth = o.i; leaves.forEach(function (l) { l.classList.remove('selected'); }); leaf.classList.add('selected'); render(); });
+        if (o.i === selMonth) leaf.classList.add('selected');
+        leaves.push(leaf); qCh.appendChild(leaf);
       });
-      leaves.push(leaf); ch.appendChild(leaf);
-      if (o.i === selMonth) leaf.classList.add('sel');
+      qNode.appendChild(qRow); qNode.appendChild(qCh); yCh.appendChild(qNode);
     });
-    node.appendChild(row); node.appendChild(ch); root.appendChild(node);
+    yNode.appendChild(yRow); yNode.appendChild(yCh); root.appendChild(yNode);
   });
 })();
 
